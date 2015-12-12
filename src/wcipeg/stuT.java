@@ -1,4 +1,4 @@
-package pej;
+package wcipeg;
 
 import java.util.Scanner;
 

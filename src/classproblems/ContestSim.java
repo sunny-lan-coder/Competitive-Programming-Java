@@ -1,4 +1,4 @@
-package classq;
+package classproblems;
 
 public class ContestSim {
 

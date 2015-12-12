@@ -1,4 +1,4 @@
-package classq;
+package classproblems;
 
 import static java.lang.Math.*;
 

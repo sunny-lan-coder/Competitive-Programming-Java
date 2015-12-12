@@ -1,4 +1,4 @@
-package classq;
+package classproblems;
 
 import java.util.Arrays;
 import java.util.Scanner;
