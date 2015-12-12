@@ -1,4 +1,4 @@
-package pej.woburn;
+package wcipej.woburn;
 
 import java.util.Scanner;
 
