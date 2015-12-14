@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class wc152j4 {
 
 	static boolean[][][] visited;
+	static boolean[][] derp;
 	static char[][] map;
 	static int N;
 	static int M;
@@ -24,12 +25,15 @@ public class wc152j4 {
 		if (x == i && y == j)
 			return true;
 
-		if (visited[i][j][d]) {
+		if(derp[i][j])
 			dangerous[i][j] = true;
+		
+		if (visited[i][j][d]) {
 			return false;
 		}
 
 		visited[i][j][d] = true;
+		derp[i][j] = true;
 
 		if (map[i][j] == '.') {
 			int ti = i;
@@ -78,7 +82,7 @@ public class wc152j4 {
 
 		else if (map[i][j] == '\\') {
 			switch (d) {
-			case 0:
+			case -0:
 				return willReachCell(x, y, 2, i, j + 1);
 			case 1:
 				return willReachCell(x, y, 3, i, j - 1);
@@ -114,7 +118,8 @@ public class wc152j4 {
 		Scanner s = new Scanner(System.in);
 		N = s.nextInt();
 		M = s.nextInt();
-		dangerous = new boolean[N][M];
+		dangerous 
+		= new boolean[N][M];
 		map = new char[N][];
 		for (int i = 0; i < N; i++) {
 			String l = s.next();
@@ -140,7 +145,7 @@ public class wc152j4 {
 					visited = new boolean[N][M][4];
 					// switch (d) {
 					// case 0:// down
-
+					derp = new boolean[N][M];
 					/// System.out.println(" test");
 					if (willReachCell(i, j, 0, i + 1, j)) {
 						count++;
@@ -151,6 +156,7 @@ public class wc152j4 {
 					// case 1:// up
 
 					visited = new boolean[N][M][4];
+					derp = new boolean[N][M];
 					// System.out.println(" test");
 					if (willReachCell(i, j, 1, i - 1, j)) {
 						count++;
@@ -161,6 +167,7 @@ public class wc152j4 {
 					// case 2:// right >
 
 					visited = new boolean[N][M][4];
+					derp = new boolean[N][M];
 					// System.out.println(" test");
 					if (willReachCell(i, j, 2, i, j + 1)) {
 						count++;
@@ -171,6 +178,7 @@ public class wc152j4 {
 					// case 3:// left <
 
 					visited = new boolean[N][M][4];
+					derp = new boolean[N][M];
 					// System.out.println(" test");
 					if (willReachCell(i, j, 3, i, j - 1)) {
 						count++;
@@ -192,3 +200,4 @@ public class wc152j4 {
 	}
 
 }
+
