@@ -3,7 +3,6 @@ package ccc.prac.y2015;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
-import static java.lang.Math.*;
 
 public class J4 {
 
