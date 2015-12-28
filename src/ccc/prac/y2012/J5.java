@@ -21,7 +21,7 @@ public class J5 {
 
 			int lim = 2 << (n * n);
 
-			//System.out.println(lim);
+			// System.out.println(lim);
 
 			boolean[] visited = new boolean[lim];
 
@@ -34,10 +34,11 @@ public class J5 {
 			while (!possible.isEmpty()) {
 				int level = levels.remove();
 				int currentExpand = possible.remove();
-				//String indent = "";
-				//for (int i = 0; i < level; i++)
-				//	indent += " ";
-				//System.out.println(indent + Integer.toBinaryString(currentExpand));
+				// String indent = "";
+				// for (int i = 0; i < level; i++)
+				// indent += " ";
+				// System.out.println(indent +
+				// Integer.toBinaryString(currentExpand));
 
 				// check if visited
 				if (visited[currentExpand])
