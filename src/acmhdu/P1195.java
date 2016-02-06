@@ -8,8 +8,8 @@ public class P1195 {
 
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
-		int textCases = s.nextInt();
-		for (int testCases = 0; testCases < textCases; testCases++) {
+		int testCases = s.nextInt();
+		for (int testCase = 0; testCase < testCases; testCase++) {
 			int in = s.nextInt();
 			int out = s.nextInt();
 
