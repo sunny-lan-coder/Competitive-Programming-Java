@@ -2,8 +2,6 @@ package wcipej.woburn;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Scanner;
 
 public class wc153j4 {

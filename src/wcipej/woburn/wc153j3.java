@@ -19,7 +19,7 @@ public class wc153j3 {
 				long A = s.nextLong();
 				long B = s.nextLong();
 
-				long lowmult = (long) Math.ceil(A / F);
+//				long lowmult = (long) Math.ceil(A / F);
 				for (long k = A; k <= B; k++) {
 					if (A % F == 0 && A >= F) {
 						weak = true;
