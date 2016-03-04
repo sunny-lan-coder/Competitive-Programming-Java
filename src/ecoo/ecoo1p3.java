@@ -57,7 +57,7 @@ public class ecoo1p3 {
 			
 			System.out.println("year = " + years + " month = " + month + " day = " + (days + 1));
 
-			System.out.printf("time is: %2d:%2d:%2d\n", hours, minutes, (long) seconds);
+			System.out.printf("time is: %2d:%02d:%02d\n", hours, minutes, (long) seconds);
 			System.out.println();
 		}
 		s.close();
