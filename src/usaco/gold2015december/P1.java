@@ -1,3 +1,4 @@
+
 package usaco.gold2015december;
 
 import java.io.BufferedReader;

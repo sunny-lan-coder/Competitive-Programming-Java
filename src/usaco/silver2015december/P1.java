@@ -1,3 +1,4 @@
+//P1
 package usaco.silver2015december;
 
 import java.io.FileInputStream;

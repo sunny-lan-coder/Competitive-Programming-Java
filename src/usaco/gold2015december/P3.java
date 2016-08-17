@@ -1,5 +1,5 @@
+//P3
 package usaco.gold2015december;
-
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
