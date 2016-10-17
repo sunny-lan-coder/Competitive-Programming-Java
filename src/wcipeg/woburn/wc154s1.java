@@ -1,4 +1,4 @@
-package wcipeg;
+package wcipeg.woburn;
 
 import java.io.BufferedReader;
 import java.io.IOException;
