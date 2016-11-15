@@ -33,24 +33,7 @@ public class wc161s3 {
 		s.close();
 		Arrays.sort(houses);
 
-		int totalTimeThere = 0;
-		int totalTimeBack = 0;
-		int lastpoint = 0;
-		int treatsum = 0;
-		for (int i = 0; i < n; i++) {
-			totalTimeThere += houses[i].p - lastpoint;
-			totalTimeThere += t;
-			totalTimeBack += houses[i].p - lastpoint;
-			if (totalTimeThere + totalTimeBack > m) {
-				break;
-
-			} else {
-				treatsum += houses[i].c;
-			}
-			lastpoint = houses[i].p;
-		}
-
-		System.out.println(treatsum);
+		
 	}
 
 }
