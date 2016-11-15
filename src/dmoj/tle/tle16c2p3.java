@@ -25,7 +25,7 @@ public class tle16c2p3 {
 					val /= g;
 			}
 			if (val != 1)
-				flag = false;
+				flag = false;;
 		}
 
 		s.close();
