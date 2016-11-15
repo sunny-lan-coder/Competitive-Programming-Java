@@ -1,5 +1,7 @@
 package wcipeg.woburn;
+
 import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class wc161s3 {
@@ -33,7 +35,30 @@ public class wc161s3 {
 		s.close();
 		Arrays.sort(houses);
 
-		
+		int sum = 0;
+		int max = 0;
+		PriorityQueue<Integer> best = new PriorityQueue<>();
+
+		for (int i = 0; i < houses.length; i++) {
+			House h = houses[i];
+			int p = h.p;
+			int c = h.c;
+
+			int timeleft = m - 2 * p;
+			if (timeleft < t)
+				break;
+
+			best.add(c);
+			sum += c;
+
+			while (!best.isEmpty() && t * best.size() > timeleft) {
+				sum -= best.remove();
+			}
+
+			max = Math.max(max, sum);
+		}
+
+		System.out.println(max);
 	}
 
 }
