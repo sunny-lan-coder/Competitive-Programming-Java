@@ -31,7 +31,7 @@ public class dmopc16c1p2 {
 
 		long linecount = 0;
 		long pointcount = 0;
-		for (long slope : lines.keySet()) {
+		for (long slope : count.keySet()) {
 			pointcount += count.get(slope) * linecount;
 			linecount += count.get(slope);
 		}
