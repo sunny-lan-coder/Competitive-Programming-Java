@@ -8,16 +8,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class ccc07s2p2 {
-	static HashMap<Integer, ArrayList<int[]>> visited;
+	static HashMap<Integer, HashMap<Integer, HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>>>> visited;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
-		visited = new HashMap<>();
+		visited = new HashMap<Integer, HashMap<Integer, HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>>>>();
 		String[] tmp;
 		int c;
-		String f;
-		String b;
 		int[] arr = new int[6];
 		boolean flag = false;
 		int[] forward = new int[6];
@@ -26,7 +24,7 @@ public class ccc07s2p2 {
 		outer: for (int i = 0; i < n; i++) {
 
 			tmp = br.readLine().split(" ");
-			
+
 			if (flag)
 				continue;
 
@@ -71,22 +69,31 @@ public class ccc07s2p2 {
 	}
 
 	static boolean contains(int[] arr) {
-		int hashcode = Arrays.hashCode(arr);
-		if (!visited.containsKey(hashcode))
+		if (!visited.containsKey(arr[0]))
 			return false;
-		for (int[] a : visited.get(hashcode)) {
-			if (Arrays.equals(arr, a))
-				return true;
-		}
-		return false;
+		if (!visited.get(arr[0]).containsKey(arr[1]))
+			return false;
+		if (!visited.get(arr[0]).get(arr[1]).containsKey(arr[2]))
+			return false;
+		if (!visited.get(arr[0]).get(arr[1]).get(arr[2]).containsKey(arr[3]))
+			return false;
+		if (!visited.get(arr[0]).get(arr[1]).get(arr[2]).get(arr[3]).containsKey(arr[4]))
+			return false;
+		if (visited.get(arr[0]).get(arr[1]).get(arr[2]).get(arr[3]).get(arr[4]) != arr[5])
+			return false;
+		return true;
 	}
 
 	static void add(int[] arr) {
-		if (contains(arr))
-			return;
-		int hashcode = Arrays.hashCode(arr);
-		if (!visited.containsKey(hashcode))
-			visited.put(hashcode, new ArrayList<>());
-		visited.get(hashcode).add(arr);
+		if (!visited.containsKey(arr[0]))
+			visited.put(arr[0], new HashMap<Integer, HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>>>());
+		if (!visited.get(arr[0]).containsKey(arr[1]))
+			visited.get(arr[0]).put(arr[1], new HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>>());
+		if (!visited.get(arr[0]).get(arr[1]).containsKey(arr[2]))
+			visited.get(arr[0]).get(arr[1]).put(arr[2], new HashMap<Integer, HashMap<Integer, Integer>>());
+		if (!visited.get(arr[0]).get(arr[1]).get(arr[2]).containsKey(arr[3]))
+			visited.get(arr[0]).get(arr[1]).get(arr[2]).put(arr[3], new HashMap<Integer, Integer>());
+		if (!visited.get(arr[0]).get(arr[1]).get(arr[2]).get(arr[3]).containsKey(arr[4]))
+			visited.get(arr[0]).get(arr[1]).get(arr[2]).get(arr[3]).put(arr[4], arr[5]);
 	}
 }
