@@ -10,6 +10,7 @@ public class ccc08s4 {
 		Scanner s = new Scanner(System.in);
 		int n = s.nextInt();
 		for (int i = 0; i < n; i++) {
+
 			c = new int[4];
 
 			c[0] = s.nextInt();
@@ -24,6 +25,7 @@ public class ccc08s4 {
 				visited[j] = false;
 			}
 			System.out.println(max);
+
 		}
 		s.close();
 	}
