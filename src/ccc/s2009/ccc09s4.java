@@ -22,11 +22,13 @@ public class ccc09s4 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
-		ArrayList<ArrayList<Tuple>> adj = new ArrayList<>(n);
+		int[][] adj = new int[n][n];
 		int[] p = new int[n];
 		int[] du = new int[n];
 		for (int i = 0; i < n; i++) {
-			adj.add(new ArrayList<>());
+			for (int j = 0; j < n; j++) {
+				adj[i][j] = -1;
+			}
 			p[i] = -1;
 			du[i] = -1;
 		}
@@ -37,8 +39,8 @@ public class ccc09s4 {
 			int x = Integer.parseInt(tmp[0]) - 1;
 			int y = Integer.parseInt(tmp[1]) - 1;
 			int c = Integer.parseInt(tmp[2]);
-			adj.get(x).add(new Tuple(y, c));
-			adj.get(y).add(new Tuple(x, c));
+			adj[x][y] = c;
+			adj[y][x] = c;
 		}
 		int k = Integer.parseInt(br.readLine());
 		for (int i = 0; i < k; i++) {
@@ -50,40 +52,37 @@ public class ccc09s4 {
 		int d = Integer.parseInt(br.readLine()) - 1;
 		br.close();
 
-		PriorityQueue<Integer> q = new PriorityQueue<>(new Comparator<Integer>() {
-			@Override
-			public int compare(Integer a1, Integer b1) {
-				int a = du[a1];
-				int b = du[b1];
-				if (e(a, b))
-					return 0;
-				if (g(a, b))
-					return 1;
-				return -1;
-			}
-		});
-		q.add(d);
 		du[d] = 0;
 		boolean[] visited = new boolean[n];
-		while (!q.isEmpty()) {
-			int minnode = q.remove();
-			int mindist = du[minnode];
+		while (true) {
+			int minnode = -1;
+			int mindist = -1;
 
-			if (!visited[minnode]) {
-				visited[minnode] = true;
-				for (Tuple adjacent : adj.get(minnode)) {
-					int newdist = adjacent.t2 + mindist;
-					if (!visited[adjacent.t1] && l( newdist , du[adjacent.t1])) {
-						du[adjacent.t1] = newdist;
-						q.add(adjacent.t1);
+			for (int i = 0; i < n; i++) {
+				if (!visited[i] && l(du[i], mindist)) {
+					minnode = i;
+					mindist = du[i];
+				}
+			}
+
+			if (mindist == -1)
+				break;
+
+			visited[minnode] = true;
+			for (int i = 0; i < n; i++) {
+				if (adj[minnode][i] != -1) {
+					int newdist = adj[minnode][i] + mindist;
+					if (!visited[i] && l(newdist, du[i])) {
+						du[i] = newdist;
 					}
 				}
 			}
+
 		}
 
 		int min = Integer.MAX_VALUE;
 		for (int i = 0; i < n; i++) {
-//			System.out.println(du[i]+"  "+p[i]);
+			// System.out.println(du[i]+" "+p[i]);
 			if (p[i] == -1 || du[i] == -1)
 				continue;
 			min = Math.min(min, du[i] + p[i]);

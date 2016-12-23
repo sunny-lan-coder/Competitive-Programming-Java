@@ -4,84 +4,66 @@ import java.util.Scanner;
 
 public class ccc08s4 {
 
+	static int[] c;
+
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int n = s.nextInt();
 		for (int i = 0; i < n; i++) {
-			int c1 = s.nextInt();
-			int c2 = s.nextInt();
-			int c3 = s.nextInt();
-			int c4 = s.nextInt();
-			int sum1 = c1;
+			c = new int[4];
+
+			c[0] = s.nextInt();
+			c[1] = s.nextInt();
+			c[2] = s.nextInt();
+			c[3] = s.nextInt();
+			visited = new boolean[4];
 			int max = Integer.MIN_VALUE;
-			for (int op1 = 0; op1 < 4; op1++) {
-				int sum2 = sum1;
-				switch (op1) {
-				case 0:
-					sum2 += c2;
-					break;
-				case 1:
-					sum2 -= c2;
-					break;
-				case 2:
-					sum2 *= c2;
-					break;
-				case 3:
-					if (sum2 % c2 == 0)
-						sum2 /= c2;
-					else
-						continue;
-					break;
-				}
-				for (int op2 = 0; op2 < 4; op2++) {
-					int sum3 = sum2;
-					switch (op2) {
-					case 0:
-						sum3 += c3;
-						break;
-					case 1:
-						sum3 -= c3;
-						break;
-					case 2:
-						sum3 *= c3;
-						break;
-					case 3:
-						if (sum3 % c3 == 0)
-							sum3 /= c3;
-						else
-							continue;
-						break;
-					}
-					for (int op3 = 0; op3 < 4; op3++) {
-						int sum4 = sum3;
-						switch (op3) {
-						case 0:
-							sum4 += c4;
-							break;
-						case 1:
-							sum4 -= c4;
-							break;
-						case 2:
-							sum4 *= c4;
-							break;
-							
-						case 3:
-							if (sum4 % c4 == 0)
-								sum4 /= c4;
-							else
-								continue;
-							break;
-						}
-						if (sum4 <= 24){
-							System.out.println(""+c1+","+op1+" "+c2+","+op2+" "+c3+","+op3+" "+c4+"="+sum4);
-							max = Math.max(max, sum4);
-						}
-					}
-				}
+			for (int j = 0; j < 4; j++) {
+				visited[j] = true;
+				max = Math.max(Math.min(24, f(c[j])), max);
+				visited[j] = false;
 			}
 			System.out.println(max);
 		}
 		s.close();
+	}
+
+	static boolean[] visited;
+
+	static int f(int sum) {
+		int max = Integer.MIN_VALUE;
+		boolean flag = true;
+		for (int i = 0; i < 4; i++) {
+			if (!visited[i]) {
+				visited[i] = true;
+				flag = false;
+
+				int val = f(sum + c[i]);
+				if (val <= 24)
+					max = Math.max(val, max);
+
+				val = f(sum - c[i]);
+				if (val <= 24)
+					max = Math.max(val, max);
+
+				val = f(sum * c[i]);
+				if (val <= 24)
+					max = Math.max(val, max);
+
+				if (sum % c[i] == 0) {
+					val = f(sum / c[i]);
+					if (val <= 24)
+						max = Math.max(val, max);
+				}
+
+				visited[i] = false;
+			}
+		}
+
+		if (flag)
+			if (sum <= 24)
+				max = sum;
+		return max;
 	}
 
 }
