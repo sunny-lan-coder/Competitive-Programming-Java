@@ -20,6 +20,7 @@ public class ccc08s1 {
 			}
 		} while (!in.equals("Waterloo"));
 		System.out.println(minn);
+		s.close();
 	}
 
 }
