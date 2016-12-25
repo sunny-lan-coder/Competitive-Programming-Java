@@ -2,6 +2,7 @@
 public class PPAP {
 
 	public static void main(String[] args) {
+		
 		String 苹果="苹果";
 		
 		String 钢笔="钢笔";
