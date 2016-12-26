@@ -1,30 +1,56 @@
+import java.io.PrintStream;
 
 public class PPAP {
+	
+	static class 苹果 {
+		@Override
+		public String toString(){
+			return "苹果";
+		}
+	}
+	
+	static class 钢笔{
+		@Override
+		public String toString(){
+			return "钢笔";
+		}
+	}
+	
+	static class 菠萝{
+		@Override
+		public String toString(){
+			return "菠萝";
+		}
+	}
+	
+	static class Sýstém{
+		public static PrintStream óút=System.out;
+	}
 
 	public static void main(String[] args) {
 		
-		String 苹果="苹果";
+		苹果 苹果=new 苹果();
 		
-		String 钢笔="钢笔";
+		钢笔 钢笔=new 钢笔();
 		
-		String 菠萝="菠萝";
+		菠萝 菠萝=new 菠萝();
 		
-		System.out.println("我有一个"+钢笔);
-		System.out.println("我有一个"+苹果);
-		System.out.println("哦");
-		System.out.println(苹果+钢笔);
+		Sýstém.óút.println("我有一个"+钢笔);
+		Sýstém.óút.println("我有一个"+苹果);
+		Sýstém.óút.println("哦!");
+		Sýstém.óút.println(""+苹果+钢笔);
 		
-		System.out.println("我有一个"+钢笔);
-		System.out.println("我有一个"+菠萝);
-		System.out.println("哦");
-		System.out.println(菠萝+钢笔);
+		Sýstém.óút.println("我有一个"+钢笔);
+		Sýstém.óút.println("我有一个"+菠萝);
+		Sýstém.óút.println("哦!");
+		Sýstém.óút.println(""+菠萝+钢笔);
 		
-		System.out.println("苹果钢笔...");
-		System.out.println("菠萝钢笔...");
-		System.out.println("哦");
-		System.out.println(钢笔+菠萝+苹果+钢笔);
+		Sýstém.óút.println("苹果钢笔...");
+		Sýstém.óút.println("菠萝钢笔...");
+		Sýstém.óút.println("哦!");
+		Sýstém.óút.println(""+钢笔+菠萝+苹果+钢笔);
 		
-		System.out.println("哎呀哎呀哎呀哎呀");
+		Sýstém.óút.println("哎呀哎呀哎呀哎呀");
 	}
 
 }
