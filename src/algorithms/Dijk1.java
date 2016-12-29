@@ -1,4 +1,4 @@
-package duwei.dikj;
+package algorithms;
 
 public class Dijk1 {
 	public static void main(String[] args) {
