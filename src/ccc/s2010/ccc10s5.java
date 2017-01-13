@@ -16,9 +16,7 @@ public class ccc10s5 {
 	static void mkTree(String val, int idx) {
 		maxidx = Math.max(maxidx, idx);
 		if (!val.contains("(")) {
-
 			int num = Integer.parseInt(val);
-
 			for (int i = 0; i <= x; i++) {
 				dp[i][idx] = num + i;
 			}
@@ -63,11 +61,11 @@ public class ccc10s5 {
 		for (int n = maxidx/2; n >= 0; n--) {
 			if(dp[x][n]!=-1)
 				continue;
+			int branch;
 			for (int i = 0; i <= x; i++) {
 				for (int j = 0; j <= i; j++) {
-					int branch=(1 + j);
+					branch=(1 + j);
 					branch*=branch;
-					
 					dpL[i][n] = Math.max(dpL[i][n], Math.min(branch, dp[i - j][n * 2 + 1]));
 					dpR[i][n] = Math.max(dpR[i][n], Math.min(branch, dp[i - j][n * 2 + 2]));
 				}
