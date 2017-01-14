@@ -1,4 +1,4 @@
-package duwei.dikj;
+package algorithms;
 
 import java.util.ArrayList;
 import java.util.Comparator;
