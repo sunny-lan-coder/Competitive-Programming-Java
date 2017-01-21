@@ -58,7 +58,7 @@ public class P109 {
 			
 			int ptr=1;
 			for(int i=1;i<n;i++){
-				while(i<n-1 && orientation(x[0],[y0],))
+				
 			}
 			
 			

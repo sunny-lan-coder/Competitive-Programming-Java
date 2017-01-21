@@ -3,149 +3,92 @@ package ccc.s2011;
 import java.util.Scanner;
 
 public class S4 {
-	
-//	on - on
-//	an - on, an
-//	bn - on, bn
-//	op - on, op
-//	abn - on, an, bn, abn
-//	ap - on, an, op, ap
-//	bp - on, bn, op, bp
-//	abp - on, an, bn, abn, op, ap, bp, abp
-//
-//	on - on, an, bn, op, ap, bp, abn, abp
-//	an - an, abn, ap, abp
-//	bn - bn, abn, bp, abp
-//	op - op, ap, bp, abp
-//	ap - op, ap, abp
-//	bp - op, bp, abp
-//	abn - abn, abp
-//	abp - abp	
+	static int o = 0;
+	static int a = 1;
+	static int b = 2;
+	static int ab = 3;
+
+	static int n = 0;
+	static int p = 1;
+
+	static int[][] avail = new int[4][2];
+	static int[][] need = new int[4][2];
+
+	static int d(int st, int srh, int dt, int drh) {
+		int amount = Math.min(need[dt][drh], avail[st][srh]);
+		// System.out.println("donating "+amount+" from ("+st+", "+srh+") to
+		// ("+dt+", "+drh+")");
+		need[dt][drh] -= amount;
+		avail[st][srh] -= amount;
+		return amount;
+	}
 
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
-		int on = s.nextInt();
-		int op = s.nextInt();
-		int an = s.nextInt();
-		int ap = s.nextInt();
-		int bn = s.nextInt();
-		int bp = s.nextInt();
-		int abn = s.nextInt();
-		int abp = s.nextInt();
-		int pon = s.nextInt();
-		int pop = s.nextInt();
-		int pan = s.nextInt();
-		int pap = s.nextInt();
-		int pbn = s.nextInt();
-		int pbp = s.nextInt();
-		int pabn = s.nextInt();
-		int pabp = s.nextInt();
+		avail[o][n] = s.nextInt();
+		avail[o][p] = s.nextInt();
+		avail[a][n] = s.nextInt();
+		avail[a][p] = s.nextInt();
+		avail[b][n] = s.nextInt();
+		avail[b][p] = s.nextInt();
+		avail[ab][n] = s.nextInt();
+		avail[ab][p] = s.nextInt();
+		need[o][n] = s.nextInt();
+		need[o][p] = s.nextInt();
+		need[a][n] = s.nextInt();
+		need[a][p] = s.nextInt();
+		need[b][n] = s.nextInt();
+		need[b][p] = s.nextInt();
+		need[ab][n] = s.nextInt();
+		need[ab][p] = s.nextInt();
 		s.close();
+		int[][] tmp1 = new int[4][2];
+		int[][] tmp2 = new int[4][2];
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 2; j++) {
+				tmp1[i][j] = avail[i][j];
+				tmp2[i][j] = need[i][j];
+			}
+		}
 
-		int tmp;
+		int total = 0;
+		total += d(o, n, o, n);
 
-		// l1
-		int ron = 0;
-		tmp = Math.min(pon - ron, Math.max(on, 0));
-		ron += tmp;
-		on -= tmp;
+		total += d(o, p, o, p) + d(o, n, o, p);
+		total += d(a, n, a, n) + d(o, n, a, n);
+		total += d(b, n, b, n) + d(o, n, b, n);
 
-		// l2
-		int ran = 0;
-		tmp = Math.min(pan - ran, Math.max(on, 0));
-		ran += tmp;
-		on -= tmp;
-		tmp = Math.min(pan - ran, Math.max(an, 0));
-		ran += tmp;
-		an -= tmp;
+		total += d(a, p, a, p) + d(o, p, a, p);
+		total += d(b, p, b, p) + d(o, p, b, p);
+		total += d(a, p, a, p) + d(o, n, a, p);
+		total += d(b, p, b, p) + d(o, n, b, p);
 
-		int rbn = 0;
-		tmp = Math.min(pbn - rbn, Math.max(on, 0));
-		rbn += tmp;
-		on -= tmp;
-		tmp = Math.min(pbn - rbn, Math.max(bn, 0));
-		rbn += tmp;
-		bn -= tmp;
+		total += d(ab, n, ab, n) + d(b, n, ab, n) + d(a, n, ab, n) + d(o, n, ab, n);
+		total += d(ab, p, ab, p) + d(ab, n, ab, p) + d(b, p, ab, p) + d(b, n, ab, p) + d(a, p, ab, p) + d(a, n, ab, p)
+				+ d(o, p, ab, p) + d(o, n, ab, p);
+		
+		int total2=total;
+		total=0;
+		
+		avail=tmp1;
+		need=tmp2;
+		
+		total += d(o, n, o, n);
 
-		int rop = 0;
-		tmp = Math.min(pop - rop, Math.max(on, 0));
-		rop += tmp;
-		on -= tmp;
-		tmp = Math.min(pop - rop, Math.max(op, 0));
-		rop += tmp;
-		op -= tmp;
+		total += d(o, p, o, p) + d(o, n, o, p);
+		total += d(a, n, a, n) + d(o, n, a, n);
+		total += d(b, n, b, n) + d(o, n, b, n);
 
-		// l3
-		int rabn = 0;
-		tmp = Math.min(pabn - rabn, Math.max(on, 0));
-		rabn += tmp;
-		on -= tmp;
-		tmp = Math.min(pabn - rabn, Math.max(an, 0));
-		rabn += tmp;
-		an -= tmp;
-		tmp = Math.min(pabn - rabn, Math.max(bn, 0));
-		rabn += tmp;
-		bn -= tmp;
-		tmp = Math.min(pabn - rabn, Math.max(abn, 0));
-		rabn += tmp;
-		abn -= tmp;
+		total += d(a, p, a, p) + d(a, n, a, p);
+		total += d(b, p, b, p) + d(b, n, b, p);
+		total += d(o, p, a, p) + d(o, n, a, p);
+		total += d(o, p, b, p) + d(o, n, b, p);
 
-		int rap = 0;
-		tmp = Math.min(pap - rap, Math.max(on, 0));
-		rap += tmp;
-		on -= tmp;
-		tmp = Math.min(pap - rap, Math.max(an, 0));
-		rap += tmp;
-		an -= tmp;
-		tmp = Math.min(pap - rap, Math.max(op, 0));
-		rap += tmp;
-		op -= tmp;
-		tmp = Math.min(pap - rap, Math.max(ap, 0));
-		rap += tmp;
-		ap -= tmp;
+		total += d(ab, n, ab, n) + d(b, n, ab, n) + d(a, n, ab, n) + d(o, n, ab, n);
+		total += d(ab, p, ab, p) + d(ab, n, ab, p) + d(b, p, ab, p) + d(b, n, ab, p) + d(a, p, ab, p) + d(a, n, ab, p)
+				+ d(o, p, ab, p) + d(o, n, ab, p);
 
-		int rbp = 0;
-		tmp = Math.min(pbp - rbp, Math.max(on, 0));
-		rbp += tmp;
-		on -= tmp;
-		tmp = Math.min(pbp - rbp, Math.max(bn, 0));
-		rbp += tmp;
-		bn -= tmp;
-		tmp = Math.min(pbp - rbp, Math.max(op, 0));
-		rbp += tmp;
-		op -= tmp;
-		tmp = Math.min(pbp - rbp, Math.max(bp, 0));
-		rbp += tmp;
-		bp -= tmp;
-
-		// l4
-		int rabp = 0;
-		tmp = Math.min(pabp - rabp, Math.max(on, 0));
-		rabp += tmp;
-		on -= tmp;
-		tmp = Math.min(pabp - rabp, Math.max(an, 0));
-		rabp += tmp;
-		an -= tmp;
-		tmp = Math.min(pabp - rabp, Math.max(bn, 0));
-		rabp += tmp;
-		bn -= tmp;
-		tmp = Math.min(pabp - rabp, Math.max(op, 0));
-		rabp += tmp;
-		op -= tmp;
-		tmp = Math.min(pabp - rabp, Math.max(ap, 0));
-		rabp += tmp;
-		ap -= tmp;
-		tmp = Math.min(pabp - rabp, Math.max(bp, 0));
-		rabp += tmp;
-		bp -= tmp;
-		tmp = Math.min(pabp - rabp, Math.max(abn, 0));
-		rabp += tmp;
-		abn -= tmp;
-		tmp = Math.min(pabp - rabp, Math.max(abp, 0));
-		rabp += tmp;
-		abp -= tmp;
-
-		System.out.println(ron + ran + rbn + rop + rabn + rap + rbp + rabp);
+		System.out.println(Math.max(total,total2));
 	}
 
 }
