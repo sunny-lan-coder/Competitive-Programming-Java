@@ -1,3 +1,4 @@
+package algorithms;
 import java.io.PrintStream;
 
 public class PPAP {
