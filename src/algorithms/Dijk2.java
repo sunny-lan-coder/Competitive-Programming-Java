@@ -15,6 +15,7 @@ public class Dijk2 {
 		for (int i = 0; i < n; i++)
 			du[i] = Integer.MAX_VALUE;
 		du[src] = 0;
+		
 		PriorityQueue<Integer> nodes = new PriorityQueue<Integer>(new Comparator<Integer>() {
 
 			@Override
@@ -22,22 +23,22 @@ public class Dijk2 {
 				return Integer.compare(du[o1], du[o2]);
 			}
 		});
+		
 		nodes.add(src);
-		boolean[] visited=new boolean[n];
+		boolean[] visited = new boolean[n];
 		while (!nodes.isEmpty()) {
 			int i = nodes.remove();
-			
-			for(int x=0;x<adj.get(i).size();x++){
-				int j=adj.get(i).get(x);
-				int side = w.get(i).get(x);
-				nodes.add(j);
-				du[j] = Math.min(du[j], du[i] + side);
-			}
-			
-			
+			if (!visited[i])
+				for (int x = 0; x < adj.get(i).size(); x++) {
+					int j = adj.get(i).get(x);
+					int side = w.get(i).get(x);
+					du[j] = Math.min(du[j], du[i] + side);
+					nodes.add(j);
+				}
+			visited[i] = true;
+
 		}
-		
-		
+
 	}
 
 }
