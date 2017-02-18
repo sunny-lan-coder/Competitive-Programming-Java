@@ -26,9 +26,6 @@ public class ccc12s4 {
 			while (!levels.isEmpty()) {
 				int currstate = states.remove();
 				int currlevel = levels.remove();
-//				System.out.println("level " + currlevel + " visiting "
-//						+ String.format("%" + n * 3 + "s", Integer.toBinaryString(currstate)).replace(' ', '0'));
-
 				if (currstate == endstate) {
 					System.out.println(currlevel);
 					continue outer;
