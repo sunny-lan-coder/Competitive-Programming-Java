@@ -1,4 +1,4 @@
-package ccc.y2016;
+package ccc.s2016;
 
 import java.util.Arrays;
 import java.util.Scanner;
