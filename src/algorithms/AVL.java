@@ -9,7 +9,7 @@ public class AVL {
 		int rheight;
 		int lsize;
 		int rsize;
-		final int val;
+		int val;
 
 		public Node(int val) {
 			this.val = val;
@@ -43,43 +43,67 @@ public class AVL {
 		}
 
 		public int getSize() {
-			return rsize + lsize+1;
+			return rsize + lsize + 1;
 		}
 
 	}
 
-	public static void main(String[] args) {
-		Node root = new Node(10);
-		root = insert(root, new Node(5));
-		root = insert(root, new Node(11));
-		root = insert(root, new Node(4));
-		root = insert(root, new Node(3));
-		root=insert(root, new Node(2));
-		root=insert(root, new Node(1));
-		root=insert(root,new Node(0));
-		System.out.println("Hello "+root.getSize());
+	static Node insert(Node currRoot, Node newNode) {
+		if (currRoot == null)
+			return newNode;
+		if (newNode.val < currRoot.val) {
+			currRoot.setLeft(insert(currRoot.left, newNode));
+		} else {
+			currRoot.setRight(insert(currRoot.right, newNode));
+		}
+
+		Node newRoot = currRoot;
+
+		if (currRoot.lheight > currRoot.rheight + 1) {
+			if (currRoot.left.rheight > currRoot.left.lheight)
+				currRoot.setLeft(leftRotate(currRoot.left));
+			newRoot = rightRotate(currRoot);
+		} else if (currRoot.rheight > currRoot.lheight + 1) {
+			if (currRoot.right.lheight > currRoot.right.rheight)
+				currRoot.setRight(rightRotate(currRoot));
+			newRoot = leftRotate(currRoot);
+		}
+
+		return newRoot;
 	}
 
-	static Node insert(Node currRoot, Node newNode) {
-		Node newRoot = currRoot;
-		if (newNode.val < currRoot.val) {
-			if (currRoot.left == null) {
-				currRoot.setLeft(newNode);
-			} else
-				currRoot.setLeft(insert(currRoot.left, newNode));
+	static Node getLargest(Node currRoot) {
+		if (currRoot.right == null)
+			return currRoot;
+		return getLargest(currRoot.right);
+	}
 
+	static Node delete(Node currRoot, Node delNode) {
+		Node newRoot = currRoot;
+
+		if (delNode.val < currRoot.val) {
+			currRoot.setLeft(delete(currRoot.left, delNode));
+		} else if (delNode.val > currRoot.val) {
+			currRoot.setRight(delete(currRoot.right, delNode));
 		} else {
-			if (currRoot.right == null) {
-				currRoot.setRight(newNode);
-			} else
-				currRoot.setRight(insert(currRoot.right, newNode));
+			if (currRoot.left != null & currRoot.right != null) {
+				Node largest = getLargest(currRoot.left);
+				currRoot.val = largest.val;
+				currRoot.setLeft(delete(currRoot.left, largest));
+				return currRoot;
+			}
+			if (currRoot.left != null && currRoot.right == null)
+				return currRoot.left;
+			if (currRoot.left == null && currRoot.right != null)
+				return currRoot.right;
+			return null;
 		}
 
 		if (currRoot.lheight > currRoot.rheight + 1) {
 			if (currRoot.left.rheight > currRoot.left.lheight)
 				currRoot.setLeft(leftRotate(currRoot.left));
 			newRoot = rightRotate(currRoot);
-		} else if (currRoot.rheight > newNode.lheight + 1) {
+		} else if (currRoot.rheight > currRoot.lheight + 1) {
 			if (currRoot.right.lheight > currRoot.right.rheight)
 				currRoot.setRight(rightRotate(currRoot));
 			newRoot = leftRotate(currRoot);
@@ -100,6 +124,19 @@ public class AVL {
 		currRoot.setLeft(newRoot.right);
 		newRoot.setRight(currRoot);
 		return newRoot;
+	}
+
+	public static void main(String[] args) {
+		Node root = null;
+		root = insert(root, new Node(5));
+		root = insert(root, new Node(11));
+		root = insert(root, new Node(4));
+		root = insert(root, new Node(3));
+		root = insert(root, new Node(2));
+		root = insert(root, new Node(1));
+		root = insert(root, new Node(0));
+		root = delete(root, new Node(3));
+		System.out.println("Hello " + root.getSize());
 	}
 
 }
