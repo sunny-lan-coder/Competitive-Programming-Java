@@ -69,7 +69,7 @@ public class cco10p3 {
 			newRoot = rightRotate(currRoot);
 		} else if (currRoot.rheight > currRoot.lheight + 1) {
 			if (currRoot.right.lheight > currRoot.right.rheight)
-				currRoot.setRight(rightRotate(currRoot));
+				currRoot.setRight(rightRotate(currRoot.right));
 			newRoot = leftRotate(currRoot);
 		}
 
@@ -90,7 +90,7 @@ public class cco10p3 {
 		} else if (delNode.val > currRoot.val) {
 			currRoot.setRight(delete(currRoot.right, delNode));
 		} else {
-			if (currRoot.left != null & currRoot.right != null) {
+			if (currRoot.left != null && currRoot.right != null) {
 				Node largest = getLargest(currRoot.left);
 				currRoot.val = largest.val;
 				currRoot.setLeft(delete(currRoot.left, largest));
@@ -109,7 +109,7 @@ public class cco10p3 {
 			newRoot = rightRotate(currRoot);
 		} else if (currRoot.rheight > currRoot.lheight + 1) {
 			if (currRoot.right.lheight > currRoot.right.rheight)
-				currRoot.setRight(rightRotate(currRoot));
+				currRoot.setRight(rightRotate(currRoot.right));
 			newRoot = leftRotate(currRoot);
 		}
 
@@ -134,18 +134,20 @@ public class cco10p3 {
 		if (val < root.rsize) {
 			return get(root.right, val);
 		} else if (val > root.rsize) {
-			return get(root.left, val - root.rsize);
+			return get(root.left, val - root.rsize-1);
 		} else {
 			return root;
 		}
 	}
+
+	static Node avl;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
 		HashMap<Integer, Integer> idToRating = new HashMap<>();
 		HashMap<Integer, Integer> ratingToId = new HashMap<>();
-		Node avl=null;
+		avl = null;
 		String[] tmp;
 		for (int i = 0; i < n; i++) {
 			tmp = br.readLine().split(" ");
@@ -154,19 +156,20 @@ public class cco10p3 {
 				int r = Integer.parseInt(tmp[2]);
 				idToRating.put(x, r);
 				ratingToId.put(r, x);
-				insert(avl, new Node(r));
-
+				avl = insert(avl, new Node(r));
 			} else if (tmp[0].equals("M")) {
 				int x = Integer.parseInt(tmp[1]);
 				int r = Integer.parseInt(tmp[2]);
 				int oldR = idToRating.get(x);
+				idToRating.remove(x);
+				ratingToId.remove(oldR);
 				idToRating.put(x, r);
-				ratingToId.put(oldR, x);
-				delete(avl, new Node(oldR));
-				insert(avl, new Node(r));
+				ratingToId.put(r, x);
+				avl = delete(avl, new Node(oldR));
+				avl = insert(avl, new Node(r));
 			} else if (tmp[0].equals("Q")) {
 				int k = Integer.parseInt(tmp[1]);
-				System.out.println(get(avl, k));
+				System.out.println(ratingToId.get(get(avl, k-1).val));
 			}
 		}
 		br.close();
