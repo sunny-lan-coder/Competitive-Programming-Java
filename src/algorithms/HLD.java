@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 //Heavy light decomposition - way to split tree into queriable parts
+//this example finds the min in the path between two nodes
 public class HLD {
-	static class Edge {
+	//represents a node and its connecting edge (need better name)
+	static class NEdge {
 		int a, c;
 
-		public Edge(int a, int cost) {
+		public NEdge(int a, int cost) {
 			this.a = a;
 			this.c = cost;
 		}
@@ -19,6 +21,7 @@ public class HLD {
 		}
 	}
 
+	//methods for the tree
 	static void construct() {
 		for (int i = n - 1; i >= 0; i--)
 			tree[i] = Math.max(tree[i << 1], tree[i << 1 | 1]);
@@ -37,7 +40,7 @@ public class HLD {
 
 	static int n;
 
-	static ArrayList<ArrayList<Edge>> adjlist;
+	static ArrayList<ArrayList<NEdge>> adjlist;
 	static int[] treesize; // stores subtree sizes
 	static int[] special;// stores special child of each node
 	static int[] weight;// stores weight connecting each node to its parent
@@ -59,8 +62,8 @@ public class HLD {
 			int b = s.nextInt() - 1;
 			int c = s.nextInt();
 
-			adjlist.get(a).add(new Edge(b, c));
-			adjlist.get(b).add(new Edge(a, c));
+			adjlist.get(a).add(new NEdge(b, c));
+			adjlist.get(b).add(new NEdge(a, c));
 
 		}
 		int root = s.nextInt() - 1;
@@ -102,7 +105,7 @@ public class HLD {
 		int best = -1;
 		// set to -1 if there is no special child
 		int tmpSpecial = -1;
-		for (Edge adj : adjlist.get(i)) {
+		for (NEdge adj : adjlist.get(i)) {
 			// avoid going back up a tree
 			if (adj.a == parent[i])
 				continue;
@@ -140,7 +143,7 @@ public class HLD {
 
 		// recursively hld for each child, make sure to skip special child, and
 		// don't go back to parent
-		for (Edge adj : adjlist.get(i)) {
+		for (NEdge adj : adjlist.get(i)) {
 			if (adj.a != special[i] && adj.a != parent[i]) {
 				hld(adj.a);
 			}
