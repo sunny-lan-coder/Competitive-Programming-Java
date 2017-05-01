@@ -1,4 +1,4 @@
-package dmoj;
+package dmoj.dmopc;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package dmoj;
+package dmoj.dmopc;
 
 import java.util.Scanner;
 
