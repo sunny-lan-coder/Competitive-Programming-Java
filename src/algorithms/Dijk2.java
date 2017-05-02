@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
+//Priority queue implementation of dijkstras
+//this version is custy and may not be fast
 public class Dijk2 {
 
 	public static void main(String[] args) {
@@ -19,8 +21,8 @@ public class Dijk2 {
 		}
 		for (int i = 0; i < m; i++) {
 			int x, y, z;
-			x = s.nextInt()-1;
-			y = s.nextInt()-1;
+			x = s.nextInt() - 1;
+			y = s.nextInt() - 1;
 			z = s.nextInt();
 			adj.get(x).add(y);
 			w.get(x).add(z);
@@ -43,15 +45,15 @@ public class Dijk2 {
 		while (!nodes.isEmpty()) {
 			int i = nodes.remove();
 			if (!visited[i]) {
-//				System.out.println("curr node: " + i);
-			
+				// System.out.println("curr node: " + i);
+
 				for (int x = 0; x < adj.get(i).size(); x++) {
 					int j = adj.get(i).get(x);
-//					System.out.println(" Check node: " + j);
+					// System.out.println(" Check node: " + j);
 					int side = w.get(i).get(x);
-//					System.out.println(" Weight: " + side);
+					// System.out.println(" Weight: " + side);
 					int alt = du[i] + side;
-//					System.out.println(" alt: " + alt);
+					// System.out.println(" alt: " + alt);
 					if (alt < du[j]) {
 						du[j] = alt;
 						nodes.add(j);

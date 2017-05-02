@@ -1,5 +1,7 @@
 package algorithms;
 
+//catalan numbers - very useful in combinatorics
+//one example - the number of ways to form a valid sequence of parenthesis of length n
 public class Catalan {
 
 	static long dp(int n) {

@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 //Given n lines, finds the minimum of all the lines for a certain x
@@ -8,58 +9,65 @@ import java.util.Scanner;
 //Query time=O(log n) - with binary search. May be reducible to O(1)
 public class GraphMin {
 
+	static class Pair implements Comparable<Pair> {
+		int m, b;
+
+		public Pair(int mi, int bi) {
+			m = mi;
+			b = bi;
+		}
+
+		@Override
+		public int compareTo(Pair o) {
+			return Integer.compare(m, o.m);
+		}
+
+		@Override
+		public String toString() {
+			return "[m=" + m + ", b=" + b+"]";
+		}
+	}
+
 	static double intersection(double m, double b, double n, double c) {
-		// System.out.println(b);
-		// System.out.println(c);
 		return (c - b) / (m - n);
 	}
 
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int n = s.nextInt();
-		int[] b = new int[n + 1];
+		Pair[] b = new Pair[n];
 		for (int i = 0; i < n; i++) {
-			b[n - i] = s.nextInt();
+			b[i] = new Pair(s.nextInt(), s.nextInt());
 		}
+		Arrays.sort(b);
 		double lastInt = -Double.MAX_VALUE;
-		int lastSlope = n;
+		Pair lastPoint = b[n - 1];
 
 		ArrayList<Double> ints = new ArrayList<>();
-		ArrayList<Integer> slopes = new ArrayList<>();
+		ArrayList<Pair> points = new ArrayList<>();
 
-		for (int slope = n - 1; slope >= 1; slope--) {
-			double inter = intersection(slope + 1, b[slope + 1], slope, b[slope]);
-			// System.out.println("intersection between " + slope + " and " +
-			// (slope + 1) + " => " + inter);
+		for (int idx = n - 2; idx >= 0; idx--) {
+			double inter = intersection(b[idx + 1].m, b[idx + 1].b, b[idx].m, b[idx].b);
 			if (inter >= lastInt) {
-				// System.out.println("intersection is further than prev, prev
-				// is valid");
 				ints.add(lastInt);
-				slopes.add(lastSlope);
+				points.add(lastPoint);
 				lastInt = inter;
-				lastSlope = slope;
+				lastPoint = b[idx];
 			} else {
-				// System.out.println("intersection is closer than prev, set
-				// prev");
-				lastInt = intersection(lastSlope, b[lastSlope], slope, b[slope]);
-				lastSlope = slope;
+				lastInt = intersection(lastPoint.m, lastPoint.b, b[idx].m, b[idx].b);
+				lastPoint = b[idx];
 			}
 		}
 		ints.add(lastInt);
-		slopes.add(lastSlope);
+		points.add(lastPoint);
 		ints.add(Double.MAX_VALUE);
-		slopes.add(0);
 
-		// for (int i = 0; i < ints.size(); i++) {
-		// System.out.println("Int => " + ints.get(i) + ", slope => " +
-		// slopes.get(i));
-		// }
 		while (s.hasNext()) {
 			int c = s.nextInt();
 			for (int i = 1; i < ints.size(); i++) {
 				if (ints.get(i - 1) <= c && ints.get(i) >= c) {
-					int slope = slopes.get(i - 1);
-					System.out.println(slope * c + b[slope]);
+					Pair pt = points.get(i - 1);
+					System.out.println(pt.m * c + pt.b);
 					break;
 				}
 			}

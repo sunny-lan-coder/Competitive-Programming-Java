@@ -1,5 +1,7 @@
 package algorithms;
 
+//standard implementation of an AVL tree
+//basically self balances
 public class AVL {
 
 	static class Node {
