@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class LCS3 {
+public class LCS_2Str {
 
 	static String s1;
 	static String s2;

@@ -41,26 +41,29 @@ public class GraphMin {
 		}
 		Arrays.sort(b);
 		double lastInt = -Double.MAX_VALUE;
-		Pair lastPoint = b[n - 1];
+		Pair lastCrossed=null;
 
 		ArrayList<Double> ints = new ArrayList<>();
 		ArrayList<Pair> points = new ArrayList<>();
 
 		for (int idx = n - 2; idx >= 0; idx--) {
 			double inter = intersection(b[idx + 1].m, b[idx + 1].b, b[idx].m, b[idx].b);
-			if (inter >= lastInt) {
+			if (inter > lastInt) {
 				ints.add(lastInt);
-				points.add(lastPoint);
+				points.add(b[idx+1]);
 				lastInt = inter;
-				lastPoint = b[idx];
+				lastCrossed=b[idx+1];
 			} else {
-				lastInt = intersection(lastPoint.m, lastPoint.b, b[idx].m, b[idx].b);
-				lastPoint = b[idx];
+				lastInt = intersection(lastCrossed.m, lastCrossed.b, b[idx].m, b[idx].b);
 			}
 		}
 		ints.add(lastInt);
-		points.add(lastPoint);
+		points.add(b[0]);
 		ints.add(Double.MAX_VALUE);
+		
+		for(int i=0;i<ints.size()-1;i++){
+			System.out.println(ints.get(i)+" -> "+points.get(i));
+		}
 
 		while (s.hasNext()) {
 			int c = s.nextInt();

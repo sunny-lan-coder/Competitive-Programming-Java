@@ -2,6 +2,8 @@ package dmoj.tle;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class tle16c6s5 {
@@ -17,12 +19,12 @@ public class tle16c6s5 {
 
 		@Override
 		public String toString() {
-			return "[" + m + "," + b + "]";
+			return "[m=" + m + ", b=" + b + "]";
 		}
 	}
 
 	static int n, m;
-	static ArrayList<ArrayList<Pair>> adj;
+	static ArrayList<HashMap<Integer, Long>> adj;
 
 	static long[][] dp;
 	static boolean[][] visited;
@@ -37,10 +39,10 @@ public class tle16c6s5 {
 			if (i == 0)
 				res = 0;
 		} else
-			for (Pair neigh : adj.get(i)) {
-				long alt = f(neigh.m, j - 1);
+			for (Entry<Integer, Long> neigh : adj.get(i).entrySet()) {
+				long alt = f(neigh.getKey(), j - 1);
 				if (alt != Long.MAX_VALUE)
-					res = Math.min(res, alt + neigh.b);
+					res = Math.min(res, alt + neigh.getValue());
 			}
 
 		dp[i][j] = res;
@@ -57,29 +59,39 @@ public class tle16c6s5 {
 		n = s.nextInt();
 		m = s.nextInt();
 		int q = s.nextInt();
+
 		adj = new ArrayList<>(n);
 		best = new ArrayList<>(n);
 
 		dp = new long[n][m + 1];
 		visited = new boolean[n][m + 1];
 		for (int i = 0; i < n; i++) {
-			adj.add(new ArrayList<>());
-			best.add(new ArrayList<>(m + 1));
+			adj.add(new HashMap<>());
+			best.add(new ArrayList<>());
 		}
 
 		for (int i = 0; i < m; i++) {
-			int u = s.nextInt() - 1;
-			int v = s.nextInt() - 1;
+			int u = s.nextInt();
+			int v = s.nextInt();
 			long t = s.nextLong();
-			adj.get(v).add(new Pair(u, t));
+
+			u--;
+			v--;
+
+			long oldval = Long.MAX_VALUE;
+			if (adj.get(v).containsKey(u))
+				oldval = adj.get(v).get(u);
+
+			adj.get(v).put(u, Math.min(oldval, t));
 		}
-		
-		ArrayList<ArrayList<Double>> ints=new ArrayList<>(n);
-		ArrayList<ArrayList<Pair>> points=new ArrayList<>(n);
+
+		ArrayList<ArrayList<Double>> ints = new ArrayList<>(n);
+		ArrayList<ArrayList<Pair>> points = new ArrayList<>(n);
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j <= m; j++)
 				f(i, j);
+
 			ArrayList<Pair> b = best.get(i);
 			b.sort(new Comparator<Pair>() {
 
@@ -89,42 +101,74 @@ public class tle16c6s5 {
 				}
 			});
 
-			double lastInt = -Double.MAX_VALUE;
-			Pair lastPoint = b.get(n - 1);
-
 			ArrayList<Double> cInts = new ArrayList<>();
 			ArrayList<Pair> cPoints = new ArrayList<>();
 
-			for (int idx = n - 2; idx >= 0; idx--) {
+			if (b.size() == 0) {
+				ints.add(cInts);
+				points.add(cPoints);
+				continue;
+			}
+
+			double lastInt = -Double.MAX_VALUE;
+			Pair lastCrossed = null;
+
+			for (int idx = b.size() - 2; idx >= 0; idx--) {
 				double inter = intersection(b.get(idx + 1).m, b.get(idx + 1).b, b.get(idx).m, b.get(idx).b);
 				if (inter >= lastInt) {
 					cInts.add(lastInt);
-					cPoints.add(lastPoint);
+					cPoints.add(b.get(idx + 1));
 					lastInt = inter;
-					lastPoint = b.get(idx);
+					lastCrossed = b.get(idx + 1);
 				} else {
-					lastInt = intersection(lastPoint.m, lastPoint.b, b.get(idx).m, b.get(idx).b);
-					lastPoint = b.get(idx);
+					lastInt = intersection(lastCrossed.m, lastCrossed.b, b.get(idx).m, b.get(idx).b);
 				}
 			}
-			
+			cInts.add(lastInt);
+			cPoints.add(b.get(0));
+
 			ints.add(cInts);
 			points.add(cPoints);
 		}
 
+		long c = 0;
 		for (int i = 0; i < q; i++) {
-			int c = s.nextInt();
-			int d = s.nextInt() - 1;
-			
+			c += s.nextLong();
+			int d = s.nextInt();
+			d--;
+			int idx = upperBound(ints.get(d), c);
+			if (idx == -1) {
+				System.out.println("Cannot Deliver");
+				continue;
+			}
+			Pair pt = points.get(d).get(idx);
+			long output = pt.m * c + pt.b;
+			System.out.println(output);
 		}
 		s.close();
+
 	}
 
 	static double intersection(double m, double b, double n, double c) {
 		return (c - b) / (m - n);
 	}
-	
-//	static int binarySearch(int lo, int hi){
-//		
-//	}
+
+	static int upperBound(ArrayList<Double> s, long t) {
+		if (s.size() == 0)
+			return -1;
+		int lo = 0;
+		int hi = s.size() - 1;
+		while (lo < hi) {
+			int mid = lo + (hi - lo + 1) / 2;
+			if (s.get(mid) <= t)
+				lo = mid;
+			else
+				hi = mid - 1;
+		}
+
+		if (s.get(lo) > t)
+			return -1;
+
+		return lo;
+	}
 }
