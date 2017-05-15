@@ -1,6 +1,6 @@
 package algorithms;
 
-public class SuffixTrie {
+public class SuffixTree {
 	public static void main(String[] args){
 		
 	}
