@@ -1,4 +1,4 @@
-package dmpg17s;
+package dmoj.dmpg17s;
 import java.util.Scanner;
 
 public class P1 {

@@ -1,4 +1,4 @@
-package dmpg17s;
+package dmoj.dmpg17s;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
