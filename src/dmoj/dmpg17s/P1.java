@@ -11,12 +11,12 @@ public class P1 {
 		return p[x] = find(p[x]);
 	}
 
-	static boolean cmpSet(int x, int y) {
-		return find(x) == find(y);
-	}
-
 	static void merge(int x, int y) {
 		p[find(x)] = find(y);
+	}
+
+	static boolean cmpSet(int x, int y) {
+		return find(x) == find(y);
 	}
 
 	public static void main(String[] args) {
